@@ -1,8 +1,6 @@
 # módulo para organizar funciones o clases utilizadas en nuestro proyecto
 # Crear tantos módulos como sea necesario para organizar el código.
 
-import random
-import math
 #Función ordenamiento burbuja
 def ord_burbuja (lista_ordenar):    #define la función y toma como argumento una lista
     tamaño = len(lista_ordenar)     #calcula la longitud de la lista ingresada
@@ -21,3 +19,5 @@ def ord_quicksort(lista_ordenar):  #define la función y toma como argumento una
     medio=[i for i in lista_ordenar if i==pivot]        #crea una lista con los elementos de la lista original iguales al pivote
     derecha=[i for i in lista_ordenar if i>pivot]       #crea una lista con los elementos de la lista original mayores al pivote
     return ord_quicksort(izquierda)+medio+ord_quicksort(derecha)  #llama recursivamente a la función en las listas "izquierda" y "derecha" y concatena los resultados
+
+#ordenamiento radix sort
