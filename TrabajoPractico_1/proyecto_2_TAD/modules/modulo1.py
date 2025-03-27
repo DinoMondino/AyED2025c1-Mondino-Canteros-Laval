@@ -50,13 +50,15 @@ class ListaDobleEnlazada:
 
     def insertar(self,dato,posicion):
         # Reviso que la posición esté correcta
+        if posicion == None:
+            posicion = self.tam
         if (posicion > self.tam-1) or (posicion < 0) or (type(posicion) not in [int]):
             raise Exception("Posición incorrecta")
         
         elif posicion == 0:
             self.agregar_al_inicio(dato)
 
-        elif (posicion == self.tamanio) and (posicion !=0):
+        elif (posicion == self.tam) and (posicion !=0):
             self.agregar_al_final(dato)
 
         else:
@@ -81,10 +83,10 @@ class ListaDobleEnlazada:
                 nuevo_nodo.asignarAnterior(actual_anterior)
                 self.tam+=1
 
-    def extraer(self,pos="default"):
-        if pos=="default":
-            pos = self.tamanio-1
-        if pos < -1 or pos > self.tamanio-1:
+    def extraer(self,pos):
+        if pos == None:
+            pos = self.tam-1
+        if pos < -1 or pos > self.tam-1:
             raise Exception("La posición ingresada es incorrecta")
 
         # El orden de complejidad para eliminar extremos es O(1).
@@ -97,26 +99,26 @@ class ListaDobleEnlazada:
                 self.cola = None #Si está solo, la cabeza y la cola son iguales
                 actual.asignarSiguiente(None)
                 actual.asignarAnterior(None)
-                self.tamanio-=1
+                self.tam-=1
                 return actual.dato
             #Caso 2: la cabeza tiene un siguiente
             else:
                 self.cabeza = actual.obtenerSiguiente()
                 self.cabeza.asignarAnterior(None)
-                self.tamanio-=1
+                self.tam-=1
                 actual.asignarSiguiente(None)
                 actual.asignarAnterior(None)
                 return actual.dato
 
         #Si pos es el último, tenemos 2 casos:
-        elif (pos == self.tamanio-1) or (pos == -1):
+        elif (pos == self.tam-1) or (pos == -1):
             #Caso 1: la cola es el único en la lista
 
             actual = self.cola
             if actual.obtenerAnterior() is None:
                 self.cola = None
                 self.cabeza = None
-                self.tamanio-=1
+                self.tam-=1
                 actual.asignarSiguiente(None)
                 actual.asignarAnterior(None)
                 return actual.dato
@@ -124,7 +126,7 @@ class ListaDobleEnlazada:
             else:
                 self.cola = actual.obtenerAnterior()
                 self.cola.asignarSiguiente(None)
-                self.tamanio-=1
+                self.tam-=1
                 actual.asignarSiguiente(None)
                 actual.asignarAnterior(None)
                 return actual.dato
@@ -149,10 +151,10 @@ class ListaDobleEnlazada:
             actual.asignarSiguiente(None)
             actual.asignarAnterior(None)
 
-            self.tamanio+=(-1)
+            self.tam+=(-1)
             return actual.dato
         
-        
+
 # Clase nodo para items en LDE
  class Nodo:
     def __init__(self, p_dato):
