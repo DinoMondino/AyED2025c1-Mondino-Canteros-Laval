@@ -5,7 +5,7 @@ class ListaDobleEnlazada:
         self.cabeza = None
         self.cola = None
         self.tam = 0
-        self.actual = None #V ariable para iteración
+        self.actual = None # Variable para iteración
 
     def esta_vacia(self):
         if (self.cabeza == None) and (self.cola == None):
@@ -17,7 +17,6 @@ class ListaDobleEnlazada:
         return self.tam
     
     def agregar_al_inicio(self,dato):
-        """Recibe un dato, crea el nodo y lo agrega al inicio"""
         nuevo_nodo = Nodo(dato)
         # Reviso primero si no está vacia, if true, el dato será la cabeza y cola
         if (self.cabeza == None) and (self.cola == None):
@@ -90,8 +89,7 @@ class ListaDobleEnlazada:
             raise Exception("Lista vacía")
         if posicion < 1 or posicion > self.tam:
             raise Exception("La posición ingresada es incorrecta")
-        
-        # El orden de complejidad para eliminar extremos es O(1).
+# El orden de complejidad para eliminar extremos es O(1).
         # Si la posicion es 0, tenemos 2 casos:
         elif posicion == 0:
             actual = self.cabeza
@@ -144,7 +142,23 @@ class ListaDobleEnlazada:
             actual.asignarAnterior(None)
             self.tam+=(-1)
             return actual.dato
+
+    def copiar(self):
+        if self.cabeza is None:
+            return ListaDobleEnlazada() # Si no hay elementos
         
+        #Creamos una lista nueva y nos posicionamos en la cabeza de la lista a copiar
+        nueva_lista = ListaDobleEnlazada()
+        actual = self.cabeza
+        #El while se detiene cuando no hay un siguiente nodo
+        while actual is not None:
+            # Obtengo el dato del nodo y creo otro nodo igual
+            dato = actual.obtenerDato()
+            nueva_lista.agregar_al_final(dato)
+            # Se lee el nodo siguiente
+            actual = actual.obtenerSiguiente()
+
+        return nueva_lista   
 
 # Clase nodo para items en LDE
 class Nodo:
