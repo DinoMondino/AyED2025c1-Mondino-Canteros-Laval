@@ -79,11 +79,80 @@ class ListaDobleEnlazada:
                 #Lo mismo con el anterior al actual, su siguiente será nuevo nodo
                 actual_anterior.asignarSiguiente(nuevo_nodo)
                 nuevo_nodo.asignarAnterior(actual_anterior)
-                self.tamanio+=1
+                self.tam+=1
 
+    def extraer(self,pos="default"):
+        if pos=="default":
+            pos = self.tamanio-1
+        if pos < -1 or pos > self.tamanio-1:
+            raise Exception("La posición ingresada es incorrecta")
 
+        # El orden de complejidad para eliminar extremos es O(1).
+        #Si pos es 0, tenemos 2 casos:
+        elif pos == 0:
+            #Caso 1: la cabeza es el único en la lista
+            actual = self.cabeza
+            if actual.obtenerSiguiente() is None:                    
+                self.cabeza = None
+                self.cola = None #Si está solo, la cabeza y la cola son iguales
+                actual.asignarSiguiente(None)
+                actual.asignarAnterior(None)
+                self.tamanio-=1
+                return actual.dato
+            #Caso 2: la cabeza tiene un siguiente
+            else:
+                self.cabeza = actual.obtenerSiguiente()
+                self.cabeza.asignarAnterior(None)
+                self.tamanio-=1
+                actual.asignarSiguiente(None)
+                actual.asignarAnterior(None)
+                return actual.dato
 
+        #Si pos es el último, tenemos 2 casos:
+        elif (pos == self.tamanio-1) or (pos == -1):
+            #Caso 1: la cola es el único en la lista
 
+            actual = self.cola
+            if actual.obtenerAnterior() is None:
+                self.cola = None
+                self.cabeza = None
+                self.tamanio-=1
+                actual.asignarSiguiente(None)
+                actual.asignarAnterior(None)
+                return actual.dato
+            #Caso 2: la cola tiene un anterior
+            else:
+                self.cola = actual.obtenerAnterior()
+                self.cola.asignarSiguiente(None)
+                self.tamanio-=1
+                actual.asignarSiguiente(None)
+                actual.asignarAnterior(None)
+                return actual.dato
+            
+
+                    #Eliminamos una posición intermedia
+        else:
+            # Se declaran las variables de actual, ant y siguiente al actual.
+            actual = self.cabeza
+            cont = 0
+            #Se busca el nodo que se quiere eliminar.
+            while cont < pos:
+                actual = actual.obtenerSiguiente()
+                cont+=1
+            # La variable ant corresponde al anterior del que será eliminado, al que se le asignará como siguiente el siguiente al eliminado.
+            ant = actual.obtenerAnterior()
+            sig = actual.obtenerSiguiente()
+
+            ant.asignarSiguiente(sig)
+            sig.asignarAnterior(ant)
+
+            actual.asignarSiguiente(None)
+            actual.asignarAnterior(None)
+
+            self.tamanio+=(-1)
+            return actual.dato
+        
+        
 # Clase nodo para items en LDE
  class Nodo:
     def __init__(self, p_dato):
