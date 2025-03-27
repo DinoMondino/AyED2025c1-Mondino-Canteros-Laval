@@ -160,6 +160,45 @@ class ListaDobleEnlazada:
 
         return nueva_lista   
 
+    def invertir(self):
+        #Caso de que la lista este vacia o tenga 1 elemento:
+        if self.tam < 2:
+            return None
+        #Caso de que tenga 2 o más elementos
+        else:
+            actual = self.cabeza
+            # Para intercambiar anterior y siguiente en toda la lista
+            while actual is not None:
+                sig = actual.obtenerSiguiente()
+                ant = actual.obtenerAnterior()
+                actual.asignarAnterior(sig)
+                actual.asignarSiguiente(ant)
+                actual = sig
+            # Intercambio los extremos
+            paso = self.cola
+            self.cola = self.cabeza
+            self.cabeza = paso
+
+    def concatenar(self,lista_p):
+        """Junta el último nodo de la lista con el primero de la lista parámetro
+        formando una nueva lista"""
+        #En caso promedio
+        if (self.tam == 0) and (lista_p.tam !=0):
+            actual = lista_p.cabeza.obtenerDato()
+            while actual is not None:
+                dato = actual.obtenerDato()
+                self.agregar_al_final(dato)
+                actual = actual.obtenerSiguiente()
+            return ListaDobleEnlazada
+        #En caso de que la lista parametro este vacia:
+        elif (self.tam != 0) and (lista_p.tam == 0):
+            return ListaDobleEnlazada
+        #En caso de que los dos esten vacíos:
+        elif (self.tam == 0) and (lista_p == 0):
+            return None
+        
+    
+
 # Clase nodo para items en LDE
 class Nodo:
     def __init__(self, p_dato):
