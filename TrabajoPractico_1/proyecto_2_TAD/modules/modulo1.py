@@ -197,7 +197,10 @@ class ListaDobleEnlazada:
         elif (self.tam == 0) and (lista_p == 0):
             return None
         
-    
+    def __add__(self, lista_p):
+        nueva_lista = self.copiar()
+        nueva_lista.concatenar(lista_p)  # Concatenamos lista_p a la copia de la lista base
+        return nueva_lista
 
 # Clase nodo para items en LDE
 class Nodo:
