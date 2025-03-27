@@ -50,27 +50,14 @@ class ListaDobleEnlazada:
 
     def insertar(self,dato,posicion):
         # Reviso que la posición esté correcta
-        # Usamos self.tam sin restarlo por 1 porque lo necesita la función para permitir la inserción en el final
-        if (posicion > self.tam) or (posicion<0) or (type(posicion) not in [int]):
+        if (posicion > self.tam-1) or (posicion < 0) or (type(posicion) not in [int]):
             raise Exception("Posición incorrecta")
         
-        elif pos == 0:
+        elif posicion == 0:
+            self.agregar_al_inicio(dato)
 
-            nodo = Nodo(dato)
-            self.agregar_al_inicio(nodo)
-
-        elif (pos == self.tamanio) and (pos !=0):
-            if self.tamanio == 0:
-                self.cola = nodo
-                self.cabeza = nodo
-                self.tamanio+=1
-            else:
-                nodo = Nodo(dato)
-                anterior = self.cola
-                anterior.asignarSiguiente(nodo)
-                nodo.asignarAnterior(anterior)
-                self.cola = nodo
-                self.tamanio+=1
+        elif (posicion == self.tamanio) and (posicion !=0):
+            self.agregar_al_final(dato)
 
         else:
             #creamos el nodo y le asignamos el dato del parametro
@@ -79,24 +66,19 @@ class ListaDobleEnlazada:
             """hacemos un while para obtener el nodo anterior y posterior al nuevo
             para poder agregarlo a la lista"""
             actual = self.cabeza
-            while contador != (pos):
+            while contador != (posicion):
                     actual = actual.obtenerSiguiente()
                     contador+=1
-
-                #Obtenemos el anterior al actual
+            # Ahora el nodo actual es el que está en la posición en la que queremos insertar
+            # Obtenemos el anterior al actual
                 actual_anterior = actual.obtenerAnterior()
 
-                #Ahora el nodo actual es el que está en la posición que queremos
-                #Empezamos cambiando el anterior del actual y el siguiente del nuevo
+            # Cambiamos el anterior del actual (nuevo nodo) y el siguiente del nuevo (actual)
                 nuevo_nodo.asignarSiguiente(actual)
                 actual.asignarAnterior(nuevo_nodo)
-
-                #Después hacemos lo mismo con el anterior al actual
-                #Cambiamos su siguiente y el anterior del nuevo
+                #Lo mismo con el anterior al actual, su siguiente será nuevo nodo
                 actual_anterior.asignarSiguiente(nuevo_nodo)
                 nuevo_nodo.asignarAnterior(actual_anterior)
-
-                #Aumentamos el contador de nodos
                 self.tamanio+=1
 
 
