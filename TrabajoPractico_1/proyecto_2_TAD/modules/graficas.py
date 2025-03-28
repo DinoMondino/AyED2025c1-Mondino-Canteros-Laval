@@ -1,4 +1,8 @@
-from TrabajoPractico_1/proyecto_2_TAD/modules/modulo1.py import Nodo, ListaDobleEnlazada
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
+# Puse eso porque sino no importa modulo1
+from proyecto_2_TAD.modules.modulo1 import Nodo, ListaDobleEnlazada
 import matplotlib.pyplot as plt
 from random import randint
 
@@ -12,7 +16,7 @@ def medir_tiempo(funcion, lista):
     fin = time.time()
     return fin - inicio
 
-tam_listas = [10, 100, 500, 1000, 5000, 10000]
+tam_listas = [11, 123, 544, 1386, 5753, 13798]
 tiempos_len = []
 tiempos_copiar = []
 tiempos_invertir = []
