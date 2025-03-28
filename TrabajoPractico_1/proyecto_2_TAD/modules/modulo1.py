@@ -4,8 +4,16 @@ class ListaDobleEnlazada:
     def __init__(self):
         self.cabeza = None
         self.cola = None
-        self.tam = 0
+        self.tamanio = 0
         self.actual = None # Variable para iteración
+
+    def __iter__(self):
+        actual = self.cabeza
+        elementos = []
+        while actual:
+            elementos.append(actual.dato)  # Agregar el dato del nodo actual
+            actual = actual.siguiente  # Avanzar al siguiente nodo
+        return iter(elementos)
 
     def esta_vacia(self):
         if (self.cabeza == None) and (self.cola == None):
@@ -14,7 +22,7 @@ class ListaDobleEnlazada:
             return False
         
     def __len__(self):
-        return self.tam
+        return self.tamanio
     
     def agregar_al_inicio(self,dato):
         nuevo_nodo = Nodo(dato)
@@ -22,14 +30,14 @@ class ListaDobleEnlazada:
         if (self.cabeza == None) and (self.cola == None):
             self.cabeza = nuevo_nodo
             self.cola = nuevo_nodo
-            self.tam+=1
+            self.tamanio+=1
         # If false, el dato será la nueva cabeza, la cabeza anterior será el nodo siguiente al dato.
         else:
             actual = self.cabeza # Me posiciono en la cabeza
             nuevo_nodo.asignarSiguiente(actual) # Le asigno al dato el siguiente
             actual.asignarAnterior(nuevo_nodo) # Le asigno al la antigua cabeza el dato como anterior
             self.cabeza = nuevo_nodo # Cambio la cabeza para que sea el dato
-            self.tam+=1
+            self.tamanio+=1
 
     def agregar_al_final(self,dato):
         # Asignamos al nodo final el dato.
@@ -37,27 +45,28 @@ class ListaDobleEnlazada:
         if (self.cabeza == None) and (self.cola == None): # Si esta vacia
             self.cola = nuevo_nodof
             self.cabeza = nuevo_nodof
-            self.tam+=1
+            self.tamanio+=1
 
         else:
             actual = self.cola
             nuevo_nodof.asignarAnterior(actual) # A el dato le agrego como anterior la cola existente
             actual.asignarSiguiente(nuevo_nodof) # A la cola existente le agrego como siguiente el dato
             self.cola = nuevo_nodof #Defino al dato como la nueva cola
-            self.tam+=1
+            self.tamanio+=1
 
 
-    def insertar(self,dato,posicion):
+    def insertar(self,dato,posicion = "defaul"):
         # Reviso que la posición esté correcta
-        if posicion == None:
-            posicion = self.tam
-        if (posicion > self.tam) or (posicion < 1) or (type(posicion) not in [int]):
+        if posicion == "defaul" and self.tamanio != 0:
+            posicion = self.tamanio-1
+            
+        if (posicion > self.tamanio) or (posicion < 0) or (type(posicion) not in [int]):
             raise Exception("Posición incorrecta")
         
-        elif posicion == 1:
+        elif posicion == 0:
             self.agregar_al_inicio(dato)
 
-        elif (posicion == self.tam):
+        elif (posicion == self.tamanio):
             self.agregar_al_final(dato)
 
         else:
@@ -67,7 +76,7 @@ class ListaDobleEnlazada:
             """hacemos un while para obtener el nodo anterior y posterior al nuevo
             para poder agregarlo a la lista"""
             actual = self.cabeza
-            while contador != (posicion-1):
+            while contador != (posicion):
                     actual = actual.obtenerSiguiente()
                     contador+=1
             # Ahora el nodo actual es el que está en la posición en la que queremos insertar
@@ -80,72 +89,60 @@ class ListaDobleEnlazada:
             #Lo mismo con el anterior al actual, su siguiente será nuevo nodo
             actual_anterior.asignarSiguiente(nuevo_nodo)
             nuevo_nodo.asignarAnterior(actual_anterior)
-            self.tam+=1
+            self.tamanio+=1
 
-    def extraer(self,posicion):
-        if posicion == None:
-            posicion = self.tam
-        if self.tam == 0:
+    def extraer(self, posicion="defaul"):
+        if posicion == "defaul" and self.tamanio != 0:  # Si no se pasa una posición, extrae el último elemento
+            posicion = self.tamanio - 1
+        if isinstance(posicion, int) and posicion < 0:
+            posicion = self.tamanio + posicion
+        if self.tamanio == 0:  # Verificamos si la lista está vacía
             raise Exception("Lista vacía")
-        if posicion < 1 or posicion > self.tam:
+
+        if posicion < 0 or posicion >= self.tamanio or not isinstance(posicion, int):  # Validamos la posición
             raise Exception("La posición ingresada es incorrecta")
-# El orden de complejidad para eliminar extremos es O(1).
-        # Si la posicion es 0, tenemos 2 casos:
-        elif posicion == 0:
+
+        # Caso 1: Extraer el primer elemento
+        if posicion == 0:
             actual = self.cabeza
-            #Caso 1: la cabeza es el único en la lista
-            if actual.obtenerSiguiente() is None:                    
-                self.cabeza = None
-                self.cola = None
-                self.tam-=1
-                return actual.dato
-            #Caso 2: la cabeza tiene un siguiente
-            else:
+            if actual.obtenerSiguiente() is None:  # Solo un elemento en la lista
+                self.cabeza = self.cola = None
+            else:  # Más de un elemento
                 self.cabeza = actual.obtenerSiguiente()
                 self.cabeza.asignarAnterior(None)
-                self.tam-=1
-                actual.asignarSiguiente(None)
-                return actual.dato
+            self.tamanio -= 1
+            return actual.obtenerDato()
 
-        #Si pos es el último, tenemos 2 casos:
-        elif (posicion == self.tam):
-            #Caso 1: la cola es el único en la lista
+        # Caso 2: Extraer el último elemento
+        elif posicion == self.tamanio -1:
             actual = self.cola
-            if actual.obtenerAnterior() is None:
-                self.cola = None
-                self.cabeza = None
-                self.tam-=1
-                return actual.dato
-            #Caso 2: la cola tiene un anterior
-            else:
+            if actual.obtenerAnterior() is None:  # Solo un elemento en la lista
+                self.cabeza = self.cola = None
+            else:  # Más de un elemento
                 self.cola = actual.obtenerAnterior()
                 self.cola.asignarSiguiente(None)
-                self.tam-=1
-                actual.asignarAnterior(None)
-                return actual.dato
-            
-        #Eliminamos una posición intermedia
+            self.tamanio -= 1
+            return actual.obtenerDato()
+
+        # Caso 3: Extraer un elemento intermedio
         else:
             actual = self.cabeza
-            cont = 0
-            #Se busca el nodo que se quiere eliminar.
-            while cont < posicion:
+            for _ in range(posicion):  # Navegar hasta el nodo en la posición
                 actual = actual.obtenerSiguiente()
-                cont+=1
-            ant = actual.obtenerAnterior() # Anterior del que será eliminado
-            sig = actual.obtenerSiguiente() # Siguiente del que será eliminado
-
-            ant.asignarSiguiente(sig) # Se le asigna al ant sig como siguiente
-            sig.asignarAnterior(ant) # Se le asigna al sig ant como anterior
-
-            actual.asignarSiguiente(None)
-            actual.asignarAnterior(None)
-            self.tam+=(-1)
-            return actual.dato
+            anterior = actual.obtenerAnterior()
+            siguiente = actual.obtenerSiguiente()
+            
+            if anterior is not None:
+                anterior.asignarSiguiente(siguiente)  # Actualizamos el siguiente del nodo anterior
+            if siguiente is not None:
+                siguiente.asignarAnterior(anterior)  # Actualizamos el anterior del nodo siguiente
+            
+            self.tamanio -= 1
+            return actual.obtenerDato()
 
     def copiar(self):
         if self.cabeza is None:
-            return ListaDobleEnlazada() # Si no hay elementos
+            return self # Si no hay elementos
         
         #Creamos una lista nueva y nos posicionamos en la cabeza de la lista a copiar
         nueva_lista = ListaDobleEnlazada()
@@ -162,39 +159,44 @@ class ListaDobleEnlazada:
 
     def invertir(self):
         #Caso de que la lista este vacia o tenga 1 elemento:
-        if self.tam < 2:
+        if self.tamanio < 2:
             return None
         #Caso de que tenga 2 o más elementos
         else:
             actual = self.cabeza
             # Para intercambiar anterior y siguiente en toda la lista
             while actual is not None:
-                sig = actual.obtenerSiguiente()
-                ant = actual.obtenerAnterior()
-                actual.asignarAnterior(sig)
-                actual.asignarSiguiente(ant)
-                actual = sig
-            # Intercambio los extremos
-            paso = self.cola
-            self.cola = self.cabeza
-            self.cabeza = paso
+                actual.siguiente, actual.anterior = actual.anterior, actual.siguiente
+                actual = actual.anterior
+            self.cabeza, self.cola = self.cola, self.cabeza
+            if self.cabeza is not None:
+                self.cabeza.asignarAnterior(None)
+            if self.cola is not None:
+                self.cola.asignarSiguiente(None)
+            return self
 
     def concatenar(self,lista_p):
-        """Junta el último nodo de la lista con el primero de la lista parámetro
-        formando una nueva lista"""
         #En caso promedio
-        if (self.tam == 0) and (lista_p.tam !=0):
-            actual = lista_p.cabeza.obtenerDato()
+        if self.tamanio != 0 and lista_p.tamanio != 0:
+            actual = lista_p.cabeza
             while actual is not None:
                 dato = actual.obtenerDato()
                 self.agregar_al_final(dato)
                 actual = actual.obtenerSiguiente()
-            return ListaDobleEnlazada
+            return self
+        # En caso de que la lista base este vacia:
+        elif (self.tamanio == 0) and (lista_p.tamanio !=0):
+            actual = lista_p.cabeza
+            while actual is not None:
+                dato = actual.obtenerDato()
+                self.agregar_al_final(dato)  # Método que añade un dato al final de la lista
+                actual = actual.obtenerSiguiente()
+            return self
         #En caso de que la lista parametro este vacia:
-        elif (self.tam != 0) and (lista_p.tam == 0):
-            return ListaDobleEnlazada
+        elif (self.tamanio != 0) and (lista_p.tamanio == 0):
+            return self
         #En caso de que los dos esten vacíos:
-        elif (self.tam == 0) and (lista_p == 0):
+        elif (self.tamanio == 0) and (lista_p == 0):
             return None
         
     def __add__(self, lista_p):
