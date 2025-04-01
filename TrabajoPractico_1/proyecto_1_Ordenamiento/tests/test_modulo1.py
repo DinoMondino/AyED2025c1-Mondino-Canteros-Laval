@@ -23,10 +23,6 @@ class SortingTest:
 
     def test_algoritmos(self):
        cant=range(1,1001,100)
-       tiempo_burbuja=[]
-       tiempo_quicksort=[]
-       tiempo_radixsort=[]
-       tiempos_ordenados=[]
        for i in cant:
           lista_random=self.generar_lista_random(i)
           self.tiempo_burbuja.append(self.medir_tiempo(ord_burbuja,lista_random))
