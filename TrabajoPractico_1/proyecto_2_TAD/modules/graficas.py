@@ -1,7 +1,7 @@
 import sys
 import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
-# Puse eso porque sino no importa modulo1
+# Para arreglar import from modulo1
 from proyecto_2_TAD.modules.modulo1 import Nodo, ListaDobleEnlazada
 import matplotlib.pyplot as plt
 from random import randint
