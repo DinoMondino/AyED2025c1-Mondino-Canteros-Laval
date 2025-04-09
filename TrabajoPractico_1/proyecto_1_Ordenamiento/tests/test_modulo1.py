@@ -1,4 +1,7 @@
 # Archivo de test para realizar pruebas unitarias del modulo1
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
 import random
 import time 
 from proyecto_1_Ordenamiento.modules.modulo1 import ord_burbuja,ord_quicksort,radix_sort
@@ -35,3 +38,4 @@ class SortingTest:
 if __name__=="__main__":
     test=SortingTest()
     test.test_algoritmos()
+
