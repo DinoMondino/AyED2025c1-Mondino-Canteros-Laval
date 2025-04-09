@@ -32,6 +32,7 @@ class SortingTest:
           self.tiempo_quicksort.append(self.medir_tiempo(ord_quicksort,lista_random))
           self.tiempo_radixsort.append(self.medir_tiempo(radix_sort,lista_random))
           self.tiempos_ordenados.append(self.medir_tiempo(sorted,lista_random))
+        return self.tiempo_burbuja, self.tiempo_quicksort, self.tiempo_radixsort, self.tiempos_ordenados
 
 
 
