@@ -34,6 +34,9 @@ class SortingTest:
           self.tiempos_ordenados.append(self.medir_tiempo(sorted,lista_random))
 
 
+      
+
+
 
 if __name__=="__main__":
     test=SortingTest()
