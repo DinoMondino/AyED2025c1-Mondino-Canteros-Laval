@@ -40,7 +40,6 @@ class SortingTest:
        print(f"Quicksort: {self.tiempo_quicksort}")
        print(f"Radix Sort: {self.tiempo_radixsort}")
        print(f"Ordenado: {self.tiempos_ordenados}")
-       print("Resultados de las pruebas:")
 
       
 
@@ -49,4 +48,5 @@ class SortingTest:
 if __name__=="__main__":
     test=SortingTest()
     test.test_algoritmos()
+    test.imprimir_resultados()
 
