@@ -6,8 +6,10 @@ Created on Sun Aug 21 11:23:53 2022
 @author: Cátedra de Algoritmos y Estructura de Datos
 """
 
-
-from modulos.juegoGuerra import JuegoGuerra
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
+from proyecto_3_Juego_Guerra.modules.JuegoGuerra import JuegoGuerra
 import unittest
 
 

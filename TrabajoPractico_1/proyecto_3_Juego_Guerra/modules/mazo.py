@@ -1,6 +1,8 @@
 # mazo.py
-
-from modules.LDE import ListaDobleEnlazada  # Importa la clase ListaDobleEnlazada
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
+from proyecto_2_TAD.modules.modulo1 import ListaDobleEnlazada  # Importa la clase ListaDobleEnlazada
 
 class DequeEmptyError(Exception):
     pass  # Define una excepción personalizada para cuando el mazo está vacío

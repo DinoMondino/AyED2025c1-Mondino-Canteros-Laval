@@ -6,9 +6,11 @@ Created on Thu Aug 11 09:32:57 2022
 
 @author: Cátedra de Algoritmos y Estructura de Datos
 """
-
-from mazo import Mazo, DequeEmptyError
-from carta import Carta
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
+from proyecto_3_Juego_Guerra.modules.mazo import Mazo, DequeEmptyError
+from proyecto_3_Juego_Guerra.modules.carta import Carta
 import random
 
 N_TURNOS = 10000

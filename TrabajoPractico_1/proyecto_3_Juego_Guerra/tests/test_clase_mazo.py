@@ -6,9 +6,11 @@ Created on Sun Aug 21 11:23:53 2022
 @author: Cátedra de Algoritmos y Estructura de Datos
 """
 
-
-from modulos.carta import Carta
-from modulos.mazo import Mazo
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
+from proyecto_3_Juego_Guerra.modules.carta import Carta
+from proyecto_3_Juego_Guerra.modules.mazo import Mazo
 import unittest
 
 
