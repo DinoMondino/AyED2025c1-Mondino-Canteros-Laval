@@ -4,7 +4,9 @@ import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
 import random
 import time
-from proyecto_1_Ordenamiento.modules.modulo1 import ord_burbuja, ord_quicksort, radix_sort
+from TrabajoPractico_1.proyecto_1_Ordenamiento.modules.Ordenamiento_burbuja import ord_burbuja
+from TrabajoPractico_1.proyecto_1_Ordenamiento.modules.Radixsort import radix_sort
+from TrabajoPractico_1.proyecto_1_Ordenamiento.modules.Quicksort import ord_quicksort
 
 
 class SortingTest:

@@ -7,7 +7,7 @@ import sys
 import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
 # Puse eso porque sino no importa modulo1
-from proyecto_2_TAD.modules.modulo1 import Nodo, ListaDobleEnlazada
+from TrabajoPractico_1.proyecto_2_TAD.modules.Lista_doblemente_enlazada import Nodo, ListaDobleEnlazada
 import unittest
 import random
 

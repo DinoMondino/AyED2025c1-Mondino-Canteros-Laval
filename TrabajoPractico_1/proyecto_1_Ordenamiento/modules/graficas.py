@@ -9,8 +9,10 @@ from random import randint
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
 
 # Importar las funciones de ordenamiento
-from proyecto_1_Ordenamiento.modules.modulo1 import ord_burbuja, ord_quicksort, radix_sort
-from proyecto_1_Ordenamiento.tests.test_modulo1 import SortingTest
+from TrabajoPractico_1.proyecto_1_Ordenamiento.modules.Radixsort import radix_sort
+from TrabajoPractico_1.proyecto_1_Ordenamiento.modules.Ordenamiento_burbuja import ord_burbuja
+from TrabajoPractico_1.proyecto_1_Ordenamiento.modules.Quicksort import ord_quicksort
+from TrabajoPractico_1.proyecto_1_Ordenamiento.tests.tests import SortingTest
 
 # Crear instancia y ejecutar test
 tester = SortingTest()
