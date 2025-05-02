@@ -1,5 +1,6 @@
 # Archivo de test para realizar pruebas unitarias del modulo1
 import sys
+print(sys.path)
 import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
 import random
