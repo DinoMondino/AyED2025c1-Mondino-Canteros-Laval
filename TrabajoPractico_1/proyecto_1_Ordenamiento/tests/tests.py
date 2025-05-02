@@ -1,13 +1,12 @@
 # Archivo de test para realizar pruebas unitarias del modulo1
 import sys
-print(sys.path)
 import os
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 import random
 import time
-from TrabajoPractico_1.proyecto_1_Ordenamiento.modules.Ordenamiento_burbuja import ord_burbuja
-from TrabajoPractico_1.proyecto_1_Ordenamiento.modules.Radixsort import radix_sort
-from TrabajoPractico_1.proyecto_1_Ordenamiento.modules.Quicksort import ord_quicksort
+from modules.Ordenamiento_burbuja import ord_burbuja
+from modules.Radixsort import radix_sort
+from modules.Quicksort import ord_quicksort
 
 
 class SortingTest:
