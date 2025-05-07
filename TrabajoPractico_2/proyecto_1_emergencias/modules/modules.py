@@ -148,7 +148,17 @@ class MonticuloBinario():
             self.actual = self.__lista[self.__contador]
             self.__contador+=1
             return self.actual
-        
+
+class ColadePrioridad:
+    def __init__(self):
+        self.__lista = MonticuloBinario()
+
+    def insertar(self, item):
+        self.__lista.insertar(item)
+
+    def eliminarMin(self):
+        return self.__lista.eliminarMin()
+    
 
     
 if __name__ == "__main__":
@@ -175,3 +185,4 @@ if __name__ == "__main__":
     lista.eliminarMin()
     print(lista.buscarMin())
     print(lista.tamanio())
+
