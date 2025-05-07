@@ -77,3 +77,74 @@ class Paciente:
 
         return paciente
 
+    def infiltrar_abajo(self,pos):
+        """función usada en la eliminación de elementos en la cima
+        del montículo o para filtrar cualquier elemento para abajo
+        recibiendo la posición"""
+        
+        #Hacemos un while para el caso de que el nodo actual tenga hijos
+        while self.__tamanio >= pos*2 :
+            #Como tenemos dos nodos, no sabemos cual es el menor de los dos.
+            #Así que averiguamos cual de los dos es 
+            poshijo = self.hijoMin(pos)
+
+            #Ahora comparamos cual si el padre es mayor o no
+            if self.__lista[pos].get_riesgo() > self.__lista[poshijo].get_riesgo():        
+                aux = self.__lista[poshijo]
+                self.__lista[poshijo] = self.__lista[pos]
+                self.__lista[pos] = aux
+            pos = poshijo
+
+    def hijoMin(self,pos):
+        #En caso de que tenga un solo hijo:
+        if pos*2+1 > self.__tamanio:
+            #Devolvemos el hijo de la izquierda(pos*2)
+            return pos * 2
+        #En caso de que tenga dos hijos:
+        else:
+            #Comparamos cual de los dos es menor y lo devolvemos
+            if self.__lista[pos*2].get_riesgo() < self.__lista[pos*2+1].get_riesgo():
+                return pos * 2
+            else:
+                return pos * 2 + 1
+
+    def infiltrar_arriba(self, pos):
+        """función utilizada en la inserción de elementos en la __lista para
+        ordenar el montículo o para infiltrar cualquier elemento para arriba
+        especificando solo su posición"""
+        while pos // 2 > 0:
+            #Si el nodo hijo es menor que el padre, los intercambia
+            if self.__lista[pos].get_riesgo() < self.__lista[pos // 2].get_riesgo():        
+                aux = self.__lista[pos // 2]
+                self.__lista[pos // 2] = self.__lista[pos]
+                self.__lista[pos] = aux
+            #Ahora comparamos con el padre del padre
+            pos = pos // 2
+
+    def estaVacio(self):
+        if self.__tamanio==0:
+            return True
+        else:
+            return False
+
+    def buscarMin(self):
+        return self.__lista[1]
+    
+    def __iter__(self):
+        # Devolver el primer nodo de la lista para comenzar la iteración
+        if self.tamanio() > 0:
+            self.actual = self.__lista[1]
+            self.__contador = 1
+            return self
+        else:
+            return self
+
+    def __next__(self):
+        if self.__contador > self.__tamanio:
+            #En caso de que se termine la lista, se termina la iteración
+            raise StopIteration
+        else:
+            #Obtiene el nodo siguiente
+            self.actual = self.__lista[self.__contador]
+            self.__contador+=1
+            return self.actual
