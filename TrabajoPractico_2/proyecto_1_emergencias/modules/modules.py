@@ -19,16 +19,16 @@ class Paciente:
         return f"{self.nombre} {self.apellido} -> {self.riesgo}-{self.descripcion}"
 
     def get_nombre(self):
-        return self.__nombre
+        return self.nombre
     
     def get_apellido(self):
-        return self.__apellido
+        return self.apellido
     
     def get_riesgo(self):
-        return self.__riesgo
+        return self.riesgo
     
     def get_descripcion_riesgo(self):
-        return self.__descripcion
+        return self.descripcion
     
     def comparar(self):
         pass
@@ -36,36 +36,34 @@ class Paciente:
     
 
 class MonticuloBinario():
-    def __init__(self,__lista=None):
-        self.lista = [0] + (lista if lista else [])
+    def __init__(self,lista=None):
+        self.lista = [None] + (lista if lista else [])
         self.tamanio = 0
 
     def insertar(self, item):
-            """Inserta un valor en la __lista y la ordena"""
-            #recibimos el item y lo agregamos a la __lista del montículo
-            self.__lista.append(item)
+            """Inserta un valor en la lista y la ordena"""
+            #recibimos el item y lo agregamos a la lista del montículo
+            self.lista.append(item)
             #aumentamos el tamaño
-            self.__tamanio+=1
+            self.tamanio+=1
             #como último paso, ordenamos el montículo
-            self.infiltrar_arriba(self.__tamanio)
+            self.infiltrar_arriba(self.tamanio)
 
     def tamanio(self):
-        return self.__tamanio
+        return self.tamanio
 
     def eliminarMin(self):
         """Quitamos el valor de la cima del montículo"""
         if self.tamanio == 0:
             return None
         #Quitamos el paciente de arriba del montículo
-        paciente = self.__lista[1]
-        #Remplazamos el valor de arriba por el último agregado
-        self.__lista[1] = self.__lista[self.__tamanio]
-        #Quitamos el último valor agregado de la __lista
-        self.__lista.pop()
-        self.__tamanio-=1
-        #Ordenamos la __lista filtrando hacia abajo el primer valor
+        if self.tamanio == 0:
+            return None
+        paciente = self.lista[1]
+        self.lista[1] = self.lista[self.tamanio]
+        self.lista.pop()
+        self.tamanio -= 1
         self.infiltrar_abajo(1)
-
         return paciente
 
     def infiltrar_abajo(self,pos):
@@ -78,18 +76,6 @@ class MonticuloBinario():
                 self.lista[pos], self.lista[pos_hijo] = self.lista[pos_hijo], self.lista[pos]
             pos = pos_hijo
 
-    def hijoMin(self,pos):
-        #En caso de que tenga un solo hijo:
-        if pos*2+1 > self.__tamanio:
-            #Devolvemos el hijo de la izquierda(pos*2)
-            return pos * 2
-        #En caso de que tenga dos hijos:
-        else:
-            #Comparamos cual de los dos es menor y lo devolvemos
-            if self.__lista[pos*2].get_riesgo() < self.__lista[pos*2+1].get_riesgo():
-                return pos * 2
-            else:
-                return pos * 2 + 1
 
     def infiltrar_arriba(self, pos):
         """función utilizada en la inserción de elementos en la __lista para
@@ -101,67 +87,47 @@ class MonticuloBinario():
             pos //= 2
 
     def estaVacio(self):
-        if self.__tamanio==0:
+        if self.tamanio==0:
             return True
         else:
             return False
 
     def buscarMin(self):
-        return self.__lista[1]
+        return self.lista[1] if self.tamanio > 0 else None
     
-    def __iter__(self):
-        # Devolver el primer nodo de la lista para comenzar la iteración
-        if self.tamanio() > 0:
-            self.actual = self.__lista[1]
-            self.__contador = 1
-            return self
-        else:
-            return self
+    def hijoMin(self, pos):
+        if pos * 2 + 1 > self.tamanio:
+            return pos * 2
+        if self.lista[pos * 2].riesgo < self.lista[pos * 2 + 1].riesgo:
+            return pos * 2
+        return pos * 2 + 1
 
     def __next__(self):
-        if self.__contador > self.__tamanio:
+        if self.contador > self.tamanio:
             #En caso de que se termine la lista, se termina la iteración
             raise StopIteration
         else:
             #Obtiene el nodo siguiente
-            self.actual = self.__lista[self.__contador]
-            self.__contador+=1
+            self.actual = self.lista[self.contador]
+            self.contador+=1
             return self.actual
 
 class ColadePrioridad:
     def __init__(self):
-        self.__lista = MonticuloBinario()
+        self.lista = MonticuloBinario()
 
     def insertar(self, item):
-        self.__lista.insertar(item)
+        self.lista.insertar(item)
 
     def eliminarMax(self):
-        return self.__lista.eliminarMin()
+        return self.lista.eliminarMin()
     
+# Ejemplo de uso
+cola = ColadePrioridad()
+for _ in range(10):
+    paciente = Paciente()
+    cola.insertar(paciente)
 
+while not cola.lista.estaVacio():
+    print(cola.eliminarMax())
     
-if __name__ == "__main__":
-    """mini testeo de funciones"""
-    lista = ColadePrioridad()
-    paciente1 = Paciente()
-    print(paciente1.get_riesgo())
-    paciente2 = Paciente()
-    print(paciente2.get_riesgo())
-    paciente3 = Paciente()
-    print(paciente3.get_riesgo())
-    paciente4 = Paciente()
-    print(paciente4.get_riesgo())
-
-    lista.insertar(paciente1)
-    lista.insertar(paciente2)
-    lista.insertar(paciente3)
-    lista.insertar(paciente4)
-
-    #lista.eliminarMin()
-    print(lista.buscarMin())
-    lista.eliminarMin()
-    print(lista.buscarMin())
-    lista.eliminarMin()
-    print(lista.buscarMin())
-    print(lista.tamanio())
-
