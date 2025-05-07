@@ -10,11 +10,13 @@ probabilidades = [0.1, 0.3, 0.6]
 
 class Paciente:
     def __init__(self):
-        n = len(nombres)
-        self.__nombre = nombres[randint(0, n-1)]
-        self.__apellido = apellidos[randint(0, n-1)]
-        self.__riesgo = choices(niveles_de_riesgo, probabilidades)[0]
-        self.__descripcion = descripciones_de_riesgo[self.__riesgo-1]
+        self.nombre = nombres[randint(0, len(nombres) - 1)]
+        self.apellido = apellidos[randint(0, len(apellidos) - 1)]
+        self.riesgo = choices(niveles_de_riesgo, probabilidades)[0]
+        self.descripcion = descripciones_de_riesgo[self.riesgo - 1]
+
+    def __str__(self):
+        return f"{self.nombre} {self.apellido} -> {self.riesgo}-{self.descripcion}"
 
     def get_nombre(self):
         return self.__nombre
@@ -30,25 +32,13 @@ class Paciente:
     
     def comparar(self):
         pass
-    
-    def __str__(self):
-        cad = self.__nombre + ' '
-        cad += self.__apellido + '\t -> '
-        cad += str(self.__riesgo) + '-' + self.__descripcion
-        return cad
+
     
 
 class MonticuloBinario():
     def __init__(self,__lista=None):
-        if __lista is None:
-            self.__lista = [0]
-        else:
-            self.__tamanio=len(__lista)
-            self.__lista = [0] + __lista
-        self.__tamanio = 0
-        self.__contador=1
-        self.actual = None
-        
+        self.lista = [0] + (lista if lista else [])
+        self.tamanio = 0
 
     def insertar(self, item):
             """Inserta un valor en la __lista y la ordena"""
@@ -64,6 +54,8 @@ class MonticuloBinario():
 
     def eliminarMin(self):
         """Quitamos el valor de la cima del montículo"""
+        if self.tamanio == 0:
+            return None
         #Quitamos el paciente de arriba del montículo
         paciente = self.__lista[1]
         #Remplazamos el valor de arriba por el último agregado
@@ -80,19 +72,11 @@ class MonticuloBinario():
         """función usada en la eliminación de elementos en la cima
         del montículo o para filtrar cualquier elemento para abajo
         recibiendo la posición"""
-        
-        #Hacemos un while para el caso de que el nodo actual tenga hijos
-        while self.__tamanio >= pos*2 :
-            #Como tenemos dos nodos, no sabemos cual es el menor de los dos.
-            #Así que averiguamos cual de los dos es 
-            poshijo = self.hijoMin(pos)
-
-            #Ahora comparamos cual si el padre es mayor o no
-            if self.__lista[pos].get_riesgo() > self.__lista[poshijo].get_riesgo():        
-                aux = self.__lista[poshijo]
-                self.__lista[poshijo] = self.__lista[pos]
-                self.__lista[pos] = aux
-            pos = poshijo
+        while pos * 2 <= self.tamanio:
+            pos_hijo = self.hijoMin(pos)
+            if self.lista[pos].riesgo > self.lista[pos_hijo].riesgo:
+                self.lista[pos], self.lista[pos_hijo] = self.lista[pos_hijo], self.lista[pos]
+            pos = pos_hijo
 
     def hijoMin(self,pos):
         #En caso de que tenga un solo hijo:
@@ -112,13 +96,9 @@ class MonticuloBinario():
         ordenar el montículo o para infiltrar cualquier elemento para arriba
         especificando solo su posición"""
         while pos // 2 > 0:
-            #Si el nodo hijo es menor que el padre, los intercambia
-            if self.__lista[pos].get_riesgo() < self.__lista[pos // 2].get_riesgo():        
-                aux = self.__lista[pos // 2]
-                self.__lista[pos // 2] = self.__lista[pos]
-                self.__lista[pos] = aux
-            #Ahora comparamos con el padre del padre
-            pos = pos // 2
+            if self.lista[pos].riesgo < self.lista[pos // 2].riesgo:
+                self.lista[pos], self.lista[pos // 2] = self.lista[pos // 2], self.lista[pos]
+            pos //= 2
 
     def estaVacio(self):
         if self.__tamanio==0:
