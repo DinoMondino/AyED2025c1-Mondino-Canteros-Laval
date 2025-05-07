@@ -44,8 +44,7 @@ class MonticuloBinario():
             self.__lista = [0]
         else:
             self.__tamanio=len(__lista)
-            self.__lista = [0].extend(__lista)
-
+            self.__lista = [0] + __lista
         self.__tamanio = 0
         self.__contador=1
         self.actual = None
