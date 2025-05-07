@@ -135,14 +135,14 @@ class ColadePrioridad:
     def insertar(self, item):
         self.__lista.insertar(item)
 
-    def eliminarMin(self):
+    def eliminarMax(self):
         return self.__lista.eliminarMin()
     
 
     
 if __name__ == "__main__":
     """mini testeo de funciones"""
-    lista = MonticuloBinario()
+    lista = ColadePrioridad()
     paciente1 = Paciente()
     print(paciente1.get_riesgo())
     paciente2 = Paciente()
