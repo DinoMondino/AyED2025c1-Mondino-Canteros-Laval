@@ -38,7 +38,7 @@ class Paciente:
         return cad
     
 
-    class MonticuloBinario():
+class MonticuloBinario():
     def __init__(self,__lista=None):
         if __lista is None:
             self.__lista = [0]
@@ -51,14 +51,14 @@ class Paciente:
         self.actual = None
         
 
- def insertar(self, item):
-        """Inserta un valor en la __lista y la ordena"""
-        #recibimos el item y lo agregamos a la __lista del montículo
-        self.__lista.append(item)
-        #aumentamos el tamaño
-        self.__tamanio+=1
-        #como último paso, ordenamos el montículo
-        self.infiltrar_arriba(self.__tamanio)
+    def insertar(self, item):
+            """Inserta un valor en la __lista y la ordena"""
+            #recibimos el item y lo agregamos a la __lista del montículo
+            self.__lista.append(item)
+            #aumentamos el tamaño
+            self.__tamanio+=1
+            #como último paso, ordenamos el montículo
+            self.infiltrar_arriba(self.__tamanio)
 
     def tamanio(self):
         return self.__tamanio
@@ -148,3 +148,30 @@ class Paciente:
             self.actual = self.__lista[self.__contador]
             self.__contador+=1
             return self.actual
+        
+
+    
+if __name__ == "__main__":
+    """mini testeo de funciones"""
+    lista = MonticuloBinario()
+    paciente1 = Paciente()
+    print(paciente1.get_riesgo())
+    paciente2 = Paciente()
+    print(paciente2.get_riesgo())
+    paciente3 = Paciente()
+    print(paciente3.get_riesgo())
+    paciente4 = Paciente()
+    print(paciente4.get_riesgo())
+
+    lista.insertar(paciente1)
+    lista.insertar(paciente2)
+    lista.insertar(paciente3)
+    lista.insertar(paciente4)
+
+    #lista.eliminarMin()
+    print(lista.buscarMin())
+    lista.eliminarMin()
+    print(lista.buscarMin())
+    lista.eliminarMin()
+    print(lista.buscarMin())
+    print(lista.tamanio())
