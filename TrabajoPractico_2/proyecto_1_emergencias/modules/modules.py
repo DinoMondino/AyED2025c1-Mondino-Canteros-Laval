@@ -49,3 +49,31 @@ class Paciente:
         self.__tamanio = 0
         self.__contador=1
         self.actual = None
+        
+
+ def insertar(self, item):
+        """Inserta un valor en la __lista y la ordena"""
+        #recibimos el item y lo agregamos a la __lista del montículo
+        self.__lista.append(item)
+        #aumentamos el tamaño
+        self.__tamanio+=1
+        #como último paso, ordenamos el montículo
+        self.infiltrar_arriba(self.__tamanio)
+
+    def tamanio(self):
+        return self.__tamanio
+
+    def eliminarMin(self):
+        """Quitamos el valor de la cima del montículo"""
+        #Quitamos el paciente de arriba del montículo
+        paciente = self.__lista[1]
+        #Remplazamos el valor de arriba por el último agregado
+        self.__lista[1] = self.__lista[self.__tamanio]
+        #Quitamos el último valor agregado de la __lista
+        self.__lista.pop()
+        self.__tamanio-=1
+        #Ordenamos la __lista filtrando hacia abajo el primer valor
+        self.infiltrar_abajo(1)
+
+        return paciente
+
