@@ -122,6 +122,13 @@ class ColadePrioridad:
     def eliminarMax(self):
         return self.lista.eliminarMin()
     
+    def __len__(self):
+        return self.lista.tamanio
+    
+    def __iter__(self):
+        # Devuelve un iterador sobre los elementos válidos del montículo (sin el None inicial)
+        return iter(self.lista.lista[1:])
+    
 # Ejemplo de uso
 cola = ColadePrioridad()
 for _ in range(10):

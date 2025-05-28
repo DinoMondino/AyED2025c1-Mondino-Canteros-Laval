@@ -7,10 +7,11 @@ import time
 import datetime
 import modules.modules as pac
 import random
+from modules.modules import ColadePrioridad  
 
 n = 20  # cantidad de ciclos de simulación
 
-cola_de_espera = list()
+cola_de_espera = ColadePrioridad()
 
 # Ciclo que gestiona la simulación
 for i in range(n):
@@ -23,15 +24,15 @@ for i in range(n):
     # Se crea un paciente un paciente por segundo
     # La criticidad del paciente es aleatoria
     paciente = pac.Paciente()
-    cola_de_espera.append(paciente)
+    cola_de_espera.insertar(paciente)
 
     # Atención de paciente en este ciclo: en el 50% de los casos
-    if random.random() < 0.5:
-        # se atiende paciente que se encuentra al frente de la cola
-        paciente_atendido = cola_de_espera.pop(0)
+    if random.random() < 0.5 and not cola_de_espera.lista.estaVacio():
+        paciente_atendido = cola_de_espera.eliminarMax()
         print('*'*40)
         print('Se atiende el paciente:', paciente_atendido)
         print('*'*40)
+
     else:
         # se continúa atendiendo paciente de ciclo anterior
         pass
