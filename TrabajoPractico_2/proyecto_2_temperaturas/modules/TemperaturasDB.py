@@ -64,6 +64,15 @@ class Temperaturas_DB:
         else:
             return False
     
+    def devolver_temperaturas(self,fecha1,fecha2):
+        try:
+            fecha1=datetime.strptime(fecha1, "%d-%m-%Y").date()
+            fecha2=datetime.strptime(fecha2, "%d-%m-%Y").date()
+        except ValueError:
+            raise ValueError("Formato de fecha incorrecto")
+        temperaturas=self.arbol.listar_en_rango(self.raiz,fecha1,fecha2)
+        return [f"{fecha.strftime( "%d/%m/%Y")}:{temperatura}°C"for fecha,temperatura in sorted(temperaturas)]
+    
     def cantidad_muestras(self):
         return self.cantidad
     

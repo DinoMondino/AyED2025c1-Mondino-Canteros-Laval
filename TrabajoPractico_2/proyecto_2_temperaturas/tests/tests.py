@@ -40,7 +40,14 @@ class TestTemperaturasDB(unittest.TestCase):
         with self.assertRaises(ValueError):
             self.db.guardar_temperatura(24.5,"16/01/2024")
 
-
-
+    def test_devolver_temperaturas_formateadas(self):
+        expectativa=[
+            "02/12/2023: 22.8 °C"
+            "03/12/2023: 23.2 °C"
+            "04/12/2023: 22.2 °C"
+        ]
+        resultado=self.db.devolver_temperaturas("02-12-2023","04-12-2023")
+        self.assertEqual(resultado,expectativa)
+        
 if __name__ =="__main__":
     unittest.main()
