@@ -1,5 +1,5 @@
 from datetime import datetime
-from Arbol_AVL import AVLTree
+from modules.Arbol_AVL import AVLTree
 
 class Temperaturas_DB:
     def __init__(self):
@@ -71,7 +71,7 @@ class Temperaturas_DB:
         except ValueError:
             raise ValueError("Formato de fecha incorrecto")
         temperaturas=self.arbol.listar_en_rango(self.raiz,fecha1,fecha2)
-        return [f"{fecha.strftime( "%d/%m/%Y")}:{temperatura}°C"for fecha,temperatura in sorted(temperaturas)]
+        return [f"{fecha.strftime( "%d/%m/%Y")}: {temperatura} °C"for fecha,temperatura in sorted(temperaturas)]
     
     def cantidad_muestras(self):
         return self.cantidad
