@@ -10,18 +10,13 @@ def main():
     grafo = construir_grafo(ruta)
     inicio = 'Peligros'
     mst = prim(grafo, inicio)
-
     recibe_de, envia_a = procesar_red(mst)
 
-    # aldeas involucradas
-    aldeas = set(grafo.keys())
-    aldeas_ordenadas = sorted(aldeas)
-
+    # Mostrar estado de la red
     print("Estado de la red de mensajes:")
-    for aldea in aldeas_ordenadas:
-        # Peligros no recibe
+    aldeas = list(grafo.keys())
+    for aldea in sorted(aldeas):
         origen = recibe_de.get(aldea, None)
-        # réplicas
         destinos = envia_a.get(aldea, [])
 
         if aldea == inicio:
@@ -32,14 +27,14 @@ def main():
         if destinos:
             print(f"  Envía réplica a: {', '.join(destinos)}")
         else:
-            print(f"  No envía réplicas")
+            print("  No envía réplicas")
 
-    # conexiones MST ordenadas
+    # Conexiones MST
     print("\nConexiones para enviar el mensaje (MST):")
     for u, v, peso in sorted(mst):
         print(f"{u} > {v} ({peso} leguas)")
 
-    # distancia 
+    # Distancia total
     total = sum(peso for _, _, peso in mst)
     print(f"\nDistancia total mínima para entregar el mensaje: {total} leguas")
 
