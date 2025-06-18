@@ -1,4 +1,4 @@
-class MinHeap:
+class MonticuloMinimo:
     def __init__(self):
         self.data = []
 
@@ -40,9 +40,9 @@ class MinHeap:
         return not self.data
 
 
-def construir_grafo(archivo):
+def construir_grafo(aldeas):
     grafo = {}
-    with open(archivo, 'r') as file:
+    with open(aldeas, 'r') as file:
         for n, line in enumerate(file, 1):
             if line.strip():
                 partes = line.strip().split(', ')
@@ -66,7 +66,7 @@ def construir_grafo(archivo):
 def prim(grafo, inicio):
     visitados = set()
     mst = []
-    heap = MinHeap()
+    heap = MonticuloMinimo()
 
     visitados.add(inicio)
     for vecino, peso in grafo[inicio]:

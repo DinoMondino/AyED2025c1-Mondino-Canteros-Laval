@@ -11,8 +11,6 @@ def main():
     inicio = 'Peligros'
     mst = prim(grafo, inicio)
     recibe_de, envia_a = procesar_red(mst)
-
-    # Mostrar estado de la red
     print("Estado de la red de mensajes:")
     aldeas = list(grafo.keys())
     for aldea in sorted(aldeas):
@@ -29,12 +27,12 @@ def main():
         else:
             print("  No envía réplicas")
 
-    # Conexiones MST
+    # MST
     print("\nConexiones para enviar el mensaje (MST):")
     for u, v, peso in sorted(mst):
         print(f"{u} > {v} ({peso} leguas)")
 
-    # Distancia total
+    # Distancia
     total = sum(peso for _, _, peso in mst)
     print(f"\nDistancia total mínima para entregar el mensaje: {total} leguas")
 
