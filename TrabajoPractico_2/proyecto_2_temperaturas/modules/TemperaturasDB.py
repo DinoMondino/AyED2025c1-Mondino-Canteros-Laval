@@ -22,7 +22,7 @@ class Temperaturas_DB:
             raise ValueError("Formato de fecha incorrecto. Use 'dd-mm-aaaa'.")
         nodo = self.arbol.buscar(self.raiz, fecha)
         if nodo:
-            return nodo.temperatura
+            return nodo.valor
         else:
             return None
         

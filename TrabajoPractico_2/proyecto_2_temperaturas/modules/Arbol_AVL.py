@@ -1,33 +1,33 @@
 
 class NodoAVL: 
-    def __init__(self, fecha, temperatura):
-        self.fecha = fecha
-        self.temperatura = temperatura
+    def __init__(self, clave, valor):
+        self.clave = clave
+        self.valor = valor
         self.altura = 1
         self.izquierda = None
         self.derecha = None
 
 class AVLTree:
-    def insertar(self, nodo, fecha, temperatura):
+    def insertar(self, nodo, clave, valor):
         if not nodo:
-            return NodoAVL(fecha, temperatura)
-        elif fecha < nodo.fecha:
-            nodo.izquierda = self.insertar(nodo.izquierda, fecha, temperatura)
+            return NodoAVL(clave, valor)
+        elif clave < nodo.clave:
+            nodo.izquierda = self.insertar(nodo.izquierda, clave, valor)
         else:
-            nodo.derecha = self.insertar(nodo.derecha, fecha, temperatura)
+            nodo.derecha = self.insertar(nodo.derecha, clave, valor)
 
         nodo.altura = 1 + max(self.get_altura(nodo.izquierda), self.get_altura(nodo.derecha))
         balance = self.get_balance(nodo)
 
         # Rotaciones
-        if balance > 1 and fecha < nodo.izquierda.fecha:
+        if balance > 1 and clave < nodo.izquierda.clave:
             return self.rotar_derecha(nodo)
-        if balance < -1 and fecha > nodo.derecha.fecha:
+        if balance < -1 and clave > nodo.derecha.clave:
             return self.rotar_izquierda(nodo)
-        if balance > 1 and fecha > nodo.izquierda.fecha:
+        if balance > 1 and clave > nodo.izquierda.clave:
             nodo.izquierda = self.rotar_izquierda(nodo.izquierda)
             return self.rotar_derecha(nodo)
-        if balance < -1 and fecha < nodo.derecha.fecha:
+        if balance < -1 and clave < nodo.derecha.clave:
             nodo.derecha = self.rotar_derecha(nodo.derecha)
             return self.rotar_izquierda(nodo)
 
@@ -60,23 +60,23 @@ class AVLTree:
             return 0
         return self.get_altura(nodo.izquierda) - self.get_altura(nodo.derecha)
     
-    def buscar(self, nodo, fecha):  
-        if nodo is None or nodo.fecha == fecha:
+    def buscar(self, nodo, clave):  
+        if nodo is None or nodo.clave == clave:
             return nodo
-        if fecha < nodo.fecha:
-            return self.buscar(nodo.izquierda, fecha)
-        return self.buscar(nodo.derecha, fecha)
+        if clave < nodo.clave:
+            return self.buscar(nodo.izquierda, clave)
+        return self.buscar(nodo.derecha, clave)
     
-    def listar_en_rango(self, nodo, fecha_inicio, fecha_fin):
+    def listar_en_rango(self, nodo, clave_inicio, clave_fin):
         if nodo is None:
             return []
         resultado = []
-        if fecha_inicio <= nodo.fecha <= fecha_fin:
-            resultado.append((nodo.fecha, nodo.temperatura))
-        if fecha_inicio < nodo.fecha:
-            resultado.extend(self.listar_en_rango(nodo.izquierda, fecha_inicio, fecha_fin))
-        if fecha_fin > nodo.fecha:
-            resultado.extend(self.listar_en_rango(nodo.derecha, fecha_inicio, fecha_fin))
+        if clave_inicio <= nodo.clave <= clave_fin:
+            resultado.append((nodo.clave, nodo.valor))
+        if clave_inicio < nodo.clave:
+            resultado.extend(self.listar_en_rango(nodo.izquierda, clave_inicio, clave_fin))
+        if clave_fin > nodo.clave:
+            resultado.extend(self.listar_en_rango(nodo.derecha, clave_inicio, clave_fin))
         return resultado
     
     def obtener_minimo(self, nodo):
@@ -85,22 +85,22 @@ class AVLTree:
             actual = actual.izquierda   
         return actual
     
-    def eliminar(self, nodo, fecha):
+    def eliminar(self, nodo, clave):
         if nodo is None:
             return nodo
-        if fecha < nodo.fecha:
-            nodo.izquierda = self.eliminar(nodo.izquierda, fecha)
-        elif fecha > nodo.fecha:
-            nodo.derecha = self.eliminar(nodo.derecha, fecha)
+        if clave < nodo.clave:
+            nodo.izquierda = self.eliminar(nodo.izquierda, clave)
+        elif clave > nodo.clave:
+            nodo.derecha = self.eliminar(nodo.derecha, clave)
         else:
             if nodo.izquierda is None:
                 return nodo.derecha
             elif nodo.derecha is None:
                 return nodo.izquierda
             temp = self.obtener_minimo(nodo.derecha)
-            nodo.fecha = temp.fecha
-            nodo.temperatura = temp.temperatura
-            nodo.derecha = self.eliminar(nodo.derecha, temp.fecha)
+            nodo.clave= temp.clave
+            nodo.valor= temp.valor
+            nodo.derecha = self.eliminar(nodo.derecha, temp.clave)
 
         nodo.altura = 1 + max(self.get_altura(nodo.izquierda), self.get_altura(nodo.derecha))
         balance = self.get_balance(nodo)
