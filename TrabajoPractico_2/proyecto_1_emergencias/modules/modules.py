@@ -152,13 +152,14 @@ class ColadePrioridad:
         return iter(self.lista)
 
 # Ejemplo de uso
-print("--- Ejemplo de uso de Cola de Prioridad ---")
-cola = ColadePrioridad()
-for _ in range(10):
-    paciente = Paciente()
-    cola.insertar(paciente)
-    print(f"Insertando: {paciente}")
+if __name__ == "__main__":
+    print("--- Ejemplo de uso de Cola de Prioridad ---")
+    cola = ColadePrioridad()
+    for _ in range(10):
+        paciente = Paciente()
+        cola.insertar(paciente)
+        print(f"Insertando: {paciente}")
 
-print("\n--- Pacientes atendidos por orden de prioridad ---")
-while not cola.lista.estaVacio():
-    print(cola.eliminarMax())
+    print("\n--- Pacientes atendidos por orden de prioridad ---")
+    while not cola.lista.estaVacio():
+        print(cola.eliminarMax())
