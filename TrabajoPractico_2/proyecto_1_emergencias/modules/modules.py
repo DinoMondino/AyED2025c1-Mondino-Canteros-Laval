@@ -5,8 +5,7 @@ nombres = ['Leandro', 'Mariela', 'Gastón', 'Andrea', 'Antonio', 'Estela', 'Jorg
 apellidos = ['Perez', 'Colman', 'Rodriguez', 'Juarez', 'García', 'Belgrano', 'Mendez', 'Lopez']
 
 niveles_de_riesgo = [1, 2, 3]
-descripciones_de_riesgo = ['crítico', 'moderado', 'bajo']
-# probabilidades de aparición de cada tipo de paciente
+descripciones_de_riesgo = ['crítico', 'moderado', 'bajo'] # probabilidades de aparición de cada tipo de paciente
 probabilidades = [0.1, 0.3, 0.6]
 
 # Generador de IDs únicos para el orden de llegada
@@ -35,14 +34,11 @@ class Paciente:
     def get_descripcion_riesgo(self):
         return self.descripcion
 
-    # Implementamos los métodos de comparación para que el montículo sea genérico
-    # y pueda comparar pacientes.
+    # Implementamos métodos de comparación para que el montículo pueda comparar pacientes.
     def __lt__(self, other):
-        # Primero compara por riesgo (menor riesgo, mayor prioridad)
-        if self.riesgo < other.riesgo:
+        if self.riesgo < other.riesgo: # Primero por riesgo
             return True
-        elif self.riesgo == other.riesgo:
-            # Si los riesgos son iguales, compara por orden de llegada (menor orden_llegada, mayor prioridad)
+        elif self.riesgo == other.riesgo: # Si los riesgos =, compara por orden de llegada 
             return self.orden_llegada < other.orden_llegada
         return False
 
@@ -57,7 +53,7 @@ class Paciente:
     def __eq__(self, other):
         return self.riesgo == other.riesgo and self.orden_llegada == other.orden_llegada
 
-## MonticuloBinario (Heap Binario Genérico)
+## MonticuloBinario de minimos
 
 class MonticuloBinario():
     def __init__(self, lista=None):
@@ -65,31 +61,28 @@ class MonticuloBinario():
         self.lista = [None] + (lista if lista else [])
         self.tamanio = len(self.lista) - 1 if lista else 0
 
-    def insertar(self, item):
+    def _insertar(self, item):
         """Inserta un valor en la lista y la ordena"""
         self.lista.append(item)
         self.tamanio += 1
         self.infiltrar_arriba(self.tamanio)
 
-    def tamanio_actual(self): # Renombrado para evitar conflicto con la variable de instancia
+    def _tamanio_actual(self): # Renombrado para evitar conflicto con la variable de instancia
         return self.tamanio
 
-    def eliminarMin(self):
+    def __eliminar(self):
         """Quita el valor de la cima del montículo (el de mayor prioridad)"""
         if self.tamanio == 0:
             return None
-        # El elemento de mayor prioridad está en la raíz (índice 1)
-        min_item = self.lista[1]
-        # Movemos el último elemento a la raíz
-        self.lista[1] = self.lista[self.tamanio]
+        item = self.lista[1] # El elemento de mayor prioridad está en la raíz (índice 1)
+        self.lista[1] = self.lista[self.tamanio]   # Movemos el último elemento a la raíz
         # Removemos el último elemento de la lista
         self.lista.pop()
         self.tamanio -= 1
-        # Reordenamos el montículo desde la raíz
-        self.infiltrar_abajo(1)
-        return min_item
+        self.infiltrar_abajo(1) # Reordenamos el montículo desde la raíz
+        return item
 
-    def infiltrar_abajo(self, pos):
+    def _infiltrar_abajo(self, pos):
         """Función usada en la eliminación de elementos en la cima del montículo
         o para filtrar cualquier elemento hacia abajo recibiendo la posición."""
         while (pos * 2) <= self.tamanio:
@@ -99,7 +92,7 @@ class MonticuloBinario():
                 self.lista[pos], self.lista[pos_hijo] = self.lista[pos_hijo], self.lista[pos]
             pos = pos_hijo
 
-    def infiltrar_arriba(self, pos):
+    def _infiltrar_arriba(self, pos):
         """Función utilizada en la inserción de elementos en la lista para
         ordenar el montículo o para infiltrar cualquier elemento hacia arriba
         especificando solo su posición."""
@@ -109,10 +102,10 @@ class MonticuloBinario():
                 self.lista[pos], self.lista[pos // 2] = self.lista[pos // 2], self.lista[pos]
             pos //= 2
 
-    def estaVacio(self):
+    def _estaVacio(self):
         return self.tamanio == 0
 
-    def buscarMin(self):
+    def _buscarMin(self):
         return self.lista[1] if self.tamanio > 0 else None
 
     def _hijoMin(self, pos):
