@@ -1,67 +1,82 @@
-class MonticuloMinimo:
+class MonticuloBinario:
     def __init__(self):
-        self.datos = []
+        self.lista = []
 
-    def push(self, elemento):
-        self.datos.append(elemento)
-        self._subir(len(self.datos) - 1)
+    def insertar(self, item):
+        self.lista.append(item)
+        self._subir(len(self.lista) - 1)
 
-    def pop(self):
-        if not self.datos:
+    def eliminarMin(self):
+        if not self.lista:
             return None
-        self._intercambiar(0, len(self.datos) - 1)
-        minimo = self.datos.pop()
+        self._intercambiar(0, len(self.lista) - 1)
+        minimo = self.lista.pop()
         self._bajar(0)
         return minimo
 
-    def _subir(self, indice):
-        padre = (indice - 1) // 2
-        while indice > 0 and self.datos[indice] < self.datos[padre]:
-            self._intercambiar(indice, padre)
-            indice = padre
-            padre = (indice - 1) // 2
+    def estaVacio(self):
+        return not self.lista
 
-    def _bajar(self, indice):
-        hijo_izquierdo = 2 * indice + 1
-        while hijo_izquierdo < len(self.datos):
-            hijo_derecho = hijo_izquierdo + 1
-            hijo_menor = hijo_izquierdo
+    def _subir(self, i):
+        padre = (i - 1) // 2
+        while i > 0 and self.lista[i] < self.lista[padre]:
+            self._intercambiar(i, padre)
+            i = padre
+            padre = (i - 1) // 2
 
-            if hijo_derecho < len(self.datos) and self.datos[hijo_derecho] < self.datos[hijo_izquierdo]:
-                hijo_menor = hijo_derecho
+    def _bajar(self, i):
+        hijo_izq = 2 * i + 1
+        while hijo_izq < len(self.lista):
+            hijo_der = hijo_izq + 1
+            hijo_menor = hijo_izq
 
-            if self.datos[indice] <= self.datos[hijo_menor]:
+            if hijo_der < len(self.lista) and self.lista[hijo_der] < self.lista[hijo_izq]:
+                hijo_menor = hijo_der
+
+            if self.lista[i] <= self.lista[hijo_menor]:
                 break
 
-            self._intercambiar(indice, hijo_menor)
-            indice = hijo_menor
-            hijo_izquierdo = 2 * indice + 1
+            self._intercambiar(i, hijo_menor)
+            i = hijo_menor
+            hijo_izq = 2 * i + 1
 
     def _intercambiar(self, i, j):
-        self.datos[i], self.datos[j] = self.datos[j], self.datos[i]
+        self.lista[i], self.lista[j] = self.lista[j], self.lista[i]
 
-    def is_empty(self):
-        return not self.datos
+class ColaDePrioridad:
+    def __init__(self):
+        self.monticulo = MonticuloBinario()
+
+    def insertar(self, item):
+        self.monticulo.insertar(item)
+
+    def eliminarMin(self):
+        return self.monticulo.eliminarMin()
+
+    def estaVacia(self):
+        return self.monticulo.estaVacio()
 
 def prim(grafo, inicio):
     visitados = set()
     mst = []
-    heap = MonticuloMinimo()
+    cola = ColaDePrioridad()
 
     visitados.add(inicio)
     for vecino, peso in grafo[inicio]:
-        heap.push((peso, inicio, vecino))
+        cola.insertar((peso, inicio, vecino))
 
-    while not heap.is_empty():
-        peso, u, v = heap.pop()
+    while not cola.estaVacia():
+        peso, u, v = cola.eliminarMin()
         if v in visitados:
             continue
         visitados.add(v)
         mst.append((u, v, peso))
         for vecino, costo in grafo[v]:
             if vecino not in visitados:
-                heap.push((costo, v, vecino))
+                cola.insertar((costo, v, vecino))
+
     return mst
+
 def construir_grafo(ruta_archivo):
     grafo = {}
     try:
