@@ -2,8 +2,8 @@
 import sys
 import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
-from TrabajoPractico_2.proyecto_1_emergencias.modules.modules import MonticuloBinario
-from TrabajoPractico_2.proyecto_1_emergencias.modules.modules import Paciente
+from proyecto_1_emergencias.modules.monticulo import MonticuloBinario
+from proyecto_1_emergencias.modules.modules import Paciente
 """mini testeo de funciones"""
 lista = MonticuloBinario()
 paciente1 = Paciente()
@@ -15,15 +15,15 @@ print(paciente3.get_riesgo())
 paciente4 = Paciente()
 print(paciente4.get_riesgo())
 
-lista.insertar(paciente1)
-lista.insertar(paciente2)
-lista.insertar(paciente3)
-lista.insertar(paciente4)
+lista._insertar(paciente1)
+lista._insertar(paciente2)
+lista._insertar(paciente3)
+lista._insertar(paciente4)
 
 #lista.eliminarMin()
-print(lista.buscarMin())
-lista.eliminarMin()
-print(lista.buscarMin())
-lista.eliminarMin()
-print(lista.buscarMin())
+print(lista._buscarMin())
+lista._eliminarMin()
+print(lista._buscarMin())
+lista._eliminarMin()
+print(lista._buscarMin())
 #print(lista.tamanio())
