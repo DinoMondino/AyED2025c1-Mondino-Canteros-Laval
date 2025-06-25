@@ -64,5 +64,5 @@ if __name__ == "__main__":
         print(f"Insertando: {paciente}")
 
     print("\n--- Pacientes atendidos por orden de prioridad ---")
-    while not cola.lista.estaVacio():
+    while not cola.lista._estaVacio(): 
         print(cola.eliminarMax())
