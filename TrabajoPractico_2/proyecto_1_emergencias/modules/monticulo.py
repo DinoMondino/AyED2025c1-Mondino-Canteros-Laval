@@ -15,7 +15,7 @@ class MonticuloBinario():
     def _tamanio_actual(self):
         return self.tamanio
 
-    def _eliminar(self): # Renombrado a 'eliminar' para ser genérico (elimina min o max según el tipo de heap)
+    def _eliminarMin(self): # Renombrado a 'eliminar' para ser genérico (elimina min o max según el tipo de heap)
         """Quita el valor de la cima del montículo (el de mayor prioridad)"""
         if self.tamanio == 0:
             return None
@@ -30,7 +30,7 @@ class MonticuloBinario():
         """Función usada en la eliminación de elementos en la cima del montículo
         o para filtrar cualquier elemento hacia abajo recibiendo la posición."""
         while (pos * 2) <= self.tamanio:
-            pos_hijo = self._obtener_hijo_prioritario(pos) # Usar el nombre privado
+            pos_hijo = self._hijoMin(pos) # Usar el nombre privado
             if self.es_min_heap:
                 if self.lista[pos] > self.lista[pos_hijo]:
                     self.lista[pos], self.lista[pos_hijo] = self.lista[pos_hijo], self.lista[pos]
@@ -55,10 +55,10 @@ class MonticuloBinario():
     def _estaVacio(self):
         return self.tamanio == 0
 
-    def _buscar_prioritario(self): # Renombrado para ser genérico
+    def _buscarMin(self): # Renombrado para ser genérico
         return self.lista[1] if self.tamanio > 0 else None
 
-    def _obtener_hijo_prioritario(self, pos):
+    def _hijoMin(self, pos):
         """Método auxiliar para encontrar el índice del hijo de mayor prioridad (menor para min-heap, mayor para max-heap)."""
         # Si solo tiene hijo izquierdo
         if (pos * 2 + 1) > self.tamanio:

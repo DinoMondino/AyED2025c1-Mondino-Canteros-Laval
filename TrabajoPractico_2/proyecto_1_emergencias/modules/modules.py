@@ -1,5 +1,5 @@
 from random import randint, choices
-from monticulo import MonticuloBinario, ColadePrioridad
+from .monticulo import MonticuloBinario, ColadePrioridad
 import itertools # Importamos itertools para generar IDs únicos
 
 nombres = ['Leandro', 'Mariela', 'Gastón', 'Andrea', 'Antonio', 'Estela', 'Jorge', 'Agustina']
