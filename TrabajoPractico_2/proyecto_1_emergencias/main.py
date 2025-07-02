@@ -27,7 +27,7 @@ for i in range(n):
     cola_de_espera.insertar(paciente)
 
     # Atención de paciente en este ciclo: en el 50% de los casos
-    if random.random() < 0.5 and not cola_de_espera.lista.estaVacio():
+    if random.random() < 0.5 and not cola_de_espera.lista._estaVacio():
         paciente_atendido = cola_de_espera.eliminarMax()
         print('*'*40)
         print('Se atiende el paciente:', paciente_atendido)

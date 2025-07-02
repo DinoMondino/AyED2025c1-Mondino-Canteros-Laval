@@ -4,7 +4,7 @@ class MonticuloBinario():
         # El primer elemento (índice 0) se mantiene como None para simplificar los cálculos de índices
         self.lista = [None] + (lista if lista else [])
         self.tamanio = len(self.lista) - 1 if lista else 0
-        self.es_min_heap = es_min_heap # Nuevo atributo para determinar si es min o max heap
+        self.es_min_heap = es_min_heap # atributo para determinar si es min o max heap
 
     def _insertar(self, item):
         """Inserta un valor en la lista y la ordena"""
@@ -15,7 +15,7 @@ class MonticuloBinario():
     def _tamanio_actual(self):
         return self.tamanio
 
-    def _eliminarMin(self): # Renombrado a 'eliminar' para ser genérico (elimina min o max según el tipo de heap)
+    def _eliminarMin(self): 
         """Quita el valor de la cima del montículo (el de mayor prioridad)"""
         if self.tamanio == 0:
             return None
@@ -23,14 +23,14 @@ class MonticuloBinario():
         self.lista[1] = self.lista[self.tamanio]
         self.lista.pop()
         self.tamanio -= 1
-        self._infiltrar_abajo(1) # Usar el nombre privado
+        self._infiltrar_abajo(1) 
         return item
 
     def _infiltrar_abajo(self, pos):
         """Función usada en la eliminación de elementos en la cima del montículo
         o para filtrar cualquier elemento hacia abajo recibiendo la posición."""
         while (pos * 2) <= self.tamanio:
-            pos_hijo = self._hijoMin(pos) # Usar el nombre privado
+            pos_hijo = self._hijoMin(pos) 
             if self.es_min_heap:
                 if self.lista[pos] > self.lista[pos_hijo]:
                     self.lista[pos], self.lista[pos_hijo] = self.lista[pos_hijo], self.lista[pos]
@@ -55,7 +55,7 @@ class MonticuloBinario():
     def _estaVacio(self):
         return self.tamanio == 0
 
-    def _buscarMin(self): # Renombrado para ser genérico
+    def _buscarMin(self): 
         return self.lista[1] if self.tamanio > 0 else None
 
     def _hijoMin(self, pos):
@@ -87,8 +87,8 @@ class ColadePrioridad:
     def insertar(self, item):
         self.lista._insertar(item)
 
-    def eliminarMax(self): # Este nombre es engañoso si la cola es min-heap. Considera renombrarlo a eliminar_prioritario
-        return self.lista._eliminar() # Ahora llama al método genérico 'eliminar'
+    def eliminarMax(self): 
+        return self.lista._eliminarMin()
 
     def __len__(self):
         return self.lista._tamanio_actual()
