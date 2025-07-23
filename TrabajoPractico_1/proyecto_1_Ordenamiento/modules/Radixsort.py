@@ -1,34 +1,41 @@
-# módulo para organizar funciones o clases utilizadas en nuestro proyecto
-# Crear tantos módulos como sea necesario para organizar el código.
+# RADIX SORT
+# Ordena los números dígito por dígito, desde el dígito menos significativo hasta el más significativo.
+# Para cada posición de dígito, utiliza Counting Sort para colocar los elementos en su posición.
+# Este proceso se repite para cada dígito hasta que todos los números están ordenados.
 
-        
-                                        
-#ordenamiento radix sort
 def counting_sort(lista,digito_actual):
     n=len(lista)
-    output=[0]*n     #la lista output de tamaño n para almacenar los elementos ordenados
-    count=[0]*10     #la lista count de tamaño 10 (para los digitos del 0 al 9) se usará para contar la ocurrencia de cada dígito en la posición actual
+    output=[0]*n    
+    # lista  para almacenar los elementos ordenados
+    count=[0]*10
+    # lista para digitos del 0 al 9, para contar la ocurrencia de cada dígito en la posición actual
 
-    for i in range(n):  #el bucle itera con cada elemento de la lista ingresada 
-        index=lista[i]//digito_actual #se calcula el indice de cada elemento lista[i] correspondiente en la lista count, nos da el digito en la posición actual que se considera 
-        count[index % 10]+=1 #cuenta cuántas veces aparece cada dígito en la posición actual
-    
+    for i in range(n):  # itera con cada elemento de la lista ingresada 
+        index=lista[i]//digito_actual
+        # calcula el indice de cada elemento lista[i] en la posición actual
+        count[index % 10]+=1 
+        # incrementa el contador para el dígito en count
     for i in range(1,10):
-        count[i]+=count[i-1]#se utiliza para acumular conteos en la lista count, convierte a la lista count en una lista de posiciones donde cada posición indica la ubicación final de cada dígito de la lista ordenada
+        count[i]+=count[i-1]
+        # la convierte en una lista que indica la ubicación final de cada dígito en la lista ordenada.
     
-    for i in range(n-1,-1,-1): #se inicia el bucle que itera sobre la lista en orden inverso, para mantener la estabilidad del algoritmo
-        index=lista[i]//digito_actual #se calcula el índice del elemento acutal
-        output[count[index%10]-1]=lista[i] #se coloca el elemento en la posición correcta de output
-        count[index%10]-=1 #se decrementa el conteo en count para el dígito actual
+    for i in range(n-1,-1,-1): # itera sobre la lista en orden inverso, para mantener la estabilidad del algoritmo
+        index=lista[i]//digito_actual 
+        # se calcula el índice del elemento acutal
+        output[count[index%10]-1]=lista[i] 
+        # se coloca el elemento en la posición correcta de output
+        count[index%10]-=1 # se decrementa el conteo en count para el dígito actual
 
     for i in range(n):
-        lista[i]=output[i] #se copia cada elemento de la lista output de vuelta a la lista original de modo que la lista contenga los elementos ordenados
+        lista[i]=output[i] 
+        # se copian los elemento del output a la lista original de modo que la lista contenga los elementos ordenados
 
 def radix_sort(lista):
-    maximo=max(lista) #se almacena el valor máximo de la lista a ordenar , para determinar luego cuántos dígitos tiene el número más grande ya que el algoritmo los va a ordenar dígito por dígito
-    x=1 #se utiliza para representar la posición del dígito que estamos considerando(1=unidades, 10=decenas, etc)
+    maximo=max(lista) 
+    # para determinar cuántos dígitos tiene el número más grande
+    x=1 
+    # se utiliza para representar la posición del dígito que estamos considerando(1=unidades, 10=decenas, etc)
     while maximo//x>0: 
-        counting_sort(lista,x) #ordena la lista según el dígito de la posición actual
-        x*=10    #se multiplica x para pasar al siguiente dígito
-    return lista #devuelve la lista ya ordenada
-        
+        counting_sort(lista,x) # ordena la lista según el dígito de la posición actual
+        x*=10    # se multiplica x para pasar al siguiente dígito
+    return lista # devuelve la lista ya ordenada
