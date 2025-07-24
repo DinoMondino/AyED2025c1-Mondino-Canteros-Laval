@@ -1,16 +1,8 @@
-# módulo para organizar funciones o clases utilizadas en nuestro proyecto
-# Crear tantos módulos como sea necesario para organizar el código.
-# -*- coding: utf-8 -*-
-"""
-Created on Thu Aug 11 09:32:57 2022
-
-@author: Cátedra de Algoritmos y Estructura de Datos
-"""
 import sys
 import os
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
-from proyecto_3_Juego_Guerra.modules.mazo import Mazo, DequeEmptyError
-from proyecto_3_Juego_Guerra.modules.carta import Carta
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+from modules.mazo import Mazo, DequeEmptyError
+from modules.carta import Carta
 import random
 
 N_TURNOS = 10000

@@ -1,8 +1,9 @@
 # mazo.py
 import sys
 import os
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
-from TrabajoPractico_1.proyecto_2_TAD.modules.Lista_doblemente_enlazada import ListaDobleEnlazada  # Importa la clase ListaDobleEnlazada
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../../../")))
+from TrabajoPractico_1.proyecto_2_TAD.modules.Lista_doblemente_enlazada import ListaDobleEnlazada
+
 
 class DequeEmptyError(Exception):
     pass  # Define una excepción personalizada para cuando el mazo está vacío

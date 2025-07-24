@@ -1,15 +1,7 @@
-# Archivo de test para realizar pruebas unitarias del modulo1
-# -*- coding: utf-8 -*-
-"""
-Created on Sun Aug 21 11:23:53 2022
-
-@author: Cátedra de Algoritmos y Estructura de Datos
-"""
-
 import sys
 import os
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
-from proyecto_3_Juego_Guerra.modules.JuegoGuerra import JuegoGuerra
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+from modules.JuegoGuerra import JuegoGuerra
 import unittest
 
 
