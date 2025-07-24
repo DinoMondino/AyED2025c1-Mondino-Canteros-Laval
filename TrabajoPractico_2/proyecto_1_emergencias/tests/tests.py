@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 import sys
 import os
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
-from proyecto_1_emergencias.modules.monticulo import MonticuloBinario
-from proyecto_1_emergencias.modules.modules import Paciente
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+from modules.monticulo import MonticuloBinario
+from modules.modules import Paciente
 """mini testeo de funciones"""
 lista = MonticuloBinario()
 paciente1 = Paciente()

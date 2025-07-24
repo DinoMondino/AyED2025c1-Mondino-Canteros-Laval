@@ -1,4 +1,7 @@
 from random import randint, choices
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 from .monticulo import MonticuloBinario, ColadePrioridad
 import itertools # Importamos itertools para generar IDs únicos
 
@@ -54,6 +57,7 @@ class Paciente:
     def __eq__(self, other):
         return self.riesgo == other.riesgo and self.orden_llegada == other.orden_llegada
 
+"""
 # Ejemplo de uso
 if __name__ == "__main__":
     print("--- Ejemplo de uso de Cola de Prioridad ---")
@@ -66,3 +70,4 @@ if __name__ == "__main__":
     print("\n--- Pacientes atendidos por orden de prioridad ---")
     while not cola.lista._estaVacio(): 
         print(cola.eliminarMax())
+"""

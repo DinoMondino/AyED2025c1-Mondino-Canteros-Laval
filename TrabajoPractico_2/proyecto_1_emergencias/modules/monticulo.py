@@ -7,7 +7,7 @@ class MonticuloBinario():
         self.es_min_heap = es_min_heap # atributo para determinar si es min o max heap
 
     def _insertar(self, item):
-        """Inserta un valor en la lista y la ordena"""
+        """Inserta un valor en la lista y la ordena; O(logn)"""
         self.lista.append(item)
         self.tamanio += 1
         self._infiltrar_arriba(self.tamanio)
@@ -16,7 +16,7 @@ class MonticuloBinario():
         return self.tamanio
 
     def _eliminarMin(self): 
-        """Quita el valor de la cima del montículo (el de mayor prioridad)"""
+        """Quita el valor de la cima del montículo (el de mayor prioridad); O(logn)"""
         if self.tamanio == 0:
             return None
         item = self.lista[1]
@@ -56,7 +56,7 @@ class MonticuloBinario():
         return self.tamanio == 0
 
     def _buscarMin(self): 
-        return self.lista[1] if self.tamanio > 0 else None
+        return self.lista[1] if self.tamanio > 0 else None #O(1)
 
     def _hijoMin(self, pos):
         """Método auxiliar para encontrar el índice del hijo de mayor prioridad (menor para min-heap, mayor para max-heap)."""

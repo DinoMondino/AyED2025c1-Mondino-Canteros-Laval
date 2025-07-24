@@ -1,8 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Sala de emergencias
-"""
-
 import time
 import datetime
 import modules.modules as pac
