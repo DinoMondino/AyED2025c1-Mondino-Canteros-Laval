@@ -1,7 +1,7 @@
 import sys
 import os
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
-from TrabajoPractico_1.proyecto_2_TAD.modules.Lista_doblemente_enlazada import Nodo, ListaDobleEnlazada
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+from modules.Lista_doblemente_enlazada import Nodo, ListaDobleEnlazada
 import matplotlib.pyplot as plt
 from random import randint
 
@@ -46,3 +46,12 @@ plt.title('Tiempo de ejecución de métodos len, copiar, invertir')
 plt.legend()
 plt.grid(True)
 plt.show()
+
+
+"""
+len(): O(1), tiempo constante.
+copiar(): O(N), tiempo lineal.
+invertir(): O(N), tiempo lineal.
+La diferencia en la pendiente entre copiar e invertir es porque copiar implica la creación de nuevos nodos 
+y la ejecución del método agregar_al_final N veces
+"""
