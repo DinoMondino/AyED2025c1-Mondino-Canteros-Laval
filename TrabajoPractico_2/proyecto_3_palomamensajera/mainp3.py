@@ -2,7 +2,7 @@ import os
 from modules.Aldeas import construir_grafo, prim
 
 def main():
-    ruta_archivo = "docs/aldeas.txt"
+    ruta_archivo = "/home/emanuel/Documentos/AyED2025c1-Mondino-Canteros-Laval/TrabajoPractico_2/proyecto_3_palomamensajera/docs/aldeas.txt"
     if not os.path.exists(ruta_archivo):
         print(f"Error: el archivo no existe en la ruta {ruta_archivo}")
         return

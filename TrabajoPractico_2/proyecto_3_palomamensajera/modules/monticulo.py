@@ -43,6 +43,9 @@ class MonticuloBinario:
     def _intercambiar(self, i, j):
         self.lista[i], self.lista[j] = self.lista[j], self.lista[i]
 
+    def __iter__(self):
+        return iter(self.lista[1:])
+
 class ColaDePrioridad:
     def __init__(self):
         self.monticulo = MonticuloBinario()
