@@ -1,4 +1,3 @@
-8
 from modules.TemperaturasDB import Temperaturas_DB
 
 def mostrar_menu():
